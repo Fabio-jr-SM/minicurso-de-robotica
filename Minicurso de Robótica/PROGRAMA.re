@@ -44,29 +44,50 @@ inicio
 	enquanto(verdadeiro) farei{
 		Esperar(50)	#Importante para evitar a quebra no Simulador
 
-		Frente(250)
-	
-		Escrever(Cor("sensorDireita"))
-	
-		se((Cor("sensorDireita")=="Preto") e (Cor("sensorEsquerda")=="Branco")) entao {
+		Frente(200)
+		
+		se (((Cor("sensorDireita")=="Preto") ou (Cor("sensorDireita")=="Branco")) e (Cor("sensorEsquerda")=="Verde")) entao {
+			Escrever(Cor("sensorEsquerda"))
+			Esquerda(100)
+			Esperar(5000)
+			
+		} senao se((Cor("sensorDireita")=="Preto") e (Cor("sensorEsquerda")=="Branco")) entao {
+			Escrever(Cor("sensorEsquerda"))
 			LigarLuz("led",0,0,255)		
-			Direita(300)
-		} senao {
-			se((Cor("sensorDireita")=="Branco") e (Cor("sensorEsquerda")=="Preto")) entao {
-				LigarLuz("led",255,255,0)
-				Esquerda(300)
-			} senao {
-				se((Cor("sensorDireita")=="Branco") e (Cor("sensorEsquerda")=="Branco")) entao {
-					Frente(300)
-					LigarLuz("led",255,0,255)
-				} senao {
-					se((Cor("sensorDireita")=="Vermelho") e (Cor("sensorEsquerda")=="Vermelho")) entao {
-						Parar()
-						LigarLuz("led",255,0,0)
-					}
-				}
-			} 			
-		}	
-	}
+			Direita(200)
 
+			enquanto(Cor("sensorEsquerda") != "Preto") farei {
+				Esperar(50)
+				Direita(180)
+			}
+
+			enquanto(Cor("sensorEsquerda") != "Branco") farei {
+				Esperar(50)
+				Esquerda(180)
+			}
+
+		} senao se ((Cor("sensorDireita")=="Branco") e (Cor("sensorEsquerda")=="Preto")) entao {
+			Escrever(Cor("sensorEsquerda"))	
+			LigarLuz("led",255,255,0)
+			Esquerda(200)
+
+			enquanto(Cor("sensorDireita") != "Preto") farei {
+				Esperar(50)
+				Esquerda(180)
+			}
+
+			enquanto(Cor("sensorDireita") != "Branco") farei {
+				Esperar(50)
+				Direita(180)
+			}
+		} senao se ((Cor("sensorDireita")=="Vermelho") e (Cor("sensorEsquerda")=="Vermelho")) entao {
+			Escrever(Cor("sensorEsquerda"))
+			Parar()
+			LigarLuz("led",255,0,0)
+		} senao {
+			Escrever(Cor("sensorEsquerda"))
+			Frente(200)
+			LigarLuz("led",255,0,255)
+		}
+	}
 fim
